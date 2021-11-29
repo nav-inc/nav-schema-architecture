@@ -1,0 +1,17 @@
+{
+    stats                           @namespace(value: "api.tweet.stats")
+                                    @title(value: "Tweet stats")
+                                    @description(value: "The stats of a given tweet")
+                                    @version(value: 1)
+    {
+        id                          @field(order: 1, required: true)
+        date                        @field(order: 2, required: true)
+        stats                       @field(order: 3, required: true) {
+            views                       @field(order: 1, required: true)
+            likes                       @field(order: 2, required: true)
+            retweets                    @field(order: 3, required: true)
+            responses                   @field(order: 4, required: true)
+        }
+    }
+}
+        

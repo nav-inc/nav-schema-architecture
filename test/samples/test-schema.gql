@@ -1,0 +1,31 @@
+scalar ZIPCode
+
+enum State {
+  CA # CALIFORNIA
+  CO # COLORADO
+  FL # FLORIDA
+  MA # MASSACHUSETTS
+  NC # NORTH-CAROLINA
+  NV # NEVADA
+  OR # OREGON
+  PA # Pennsylvania
+  TX # TEXAS
+  UT # UTAH
+  VA # VIRGINIA
+  WA # WASHINGTON
+}
+
+type Address {
+  street: [String]!
+  city: String!
+  state: State!
+  zipCode: ZIPCode
+}
+
+schema {
+  query: Query
+}
+
+type Query {
+  newAddress: Address
+}

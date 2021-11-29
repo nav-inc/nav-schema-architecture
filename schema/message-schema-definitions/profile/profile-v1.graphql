@@ -1,0 +1,18 @@
+{
+    profile                         @namespace(value: "api.tweet.profile")
+                                    @title(value: "User profile payload")
+                                    @description(value: "Sample user profile")
+                                    @version(value: 1)
+    {
+        id                          @field(order: 1, required: true)
+        username                    @field(order: 2, required: true)
+        firstName                   @field(order: 3)
+        lastName                    @field(order: 4)
+        bio                         @field(order: 5)
+        birthdate                   @field(order: 6)
+        email                       @field(order: 7, required: true)
+        accountType                 @field(order: 8)
+        verified                    @field(order: 9)
+    }
+}
+        

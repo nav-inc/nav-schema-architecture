@@ -1,0 +1,44 @@
+{
+  "name": "nav-schema-architecture",
+  "version": "1.0.0",
+  "homepage": "https://github.com/nav-inc/nav-schema-architecture",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nav-inc/nav-schema-architecture.git"
+  },
+  "description": "Nav common data model and event formats",
+  "scripts": {
+    "generate-output:commit": "scripty",
+    "generate-output:generate": "scripty",
+    "git:add-working-files": "scripty",
+    "git:push-files-tags": "scripty",
+    "preversion": "scripty",
+    "postversion": "scripty",
+    "test": "mocha",
+    "nyc": "nyc --reporter=text mocha",
+    "version": "npm run git:add-working-files"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql": "15.6.0",
+    "graphql-tag": "2.12.6",
+    "graphql-tools": "8.2.0",
+    "ramda": "0.27.1"
+  },
+  "scripty": {
+    "silent": true
+  },
+  "devDependencies": {
+    "chalk": "^4.1.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "generate-changelog": "^1.8.0",
+    "mocha": "^8.3.0",
+    "nyc": "^15.1.0",
+    "prepend-file": "^2.0.0",
+    "prettier": "2.4.1",
+    "promisify-child-process": "^4.1.1",
+    "scripty": "^2.0.0"
+  }
+}

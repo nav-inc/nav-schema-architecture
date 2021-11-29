@@ -1,0 +1,15 @@
+{
+  "extends": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "parser": "flow" }]
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "ignorePatterns": ["output/**.*", "schema/**/*.graphql", "schema/**/*.gql"]
+}

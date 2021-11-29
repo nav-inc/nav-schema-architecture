@@ -1,0 +1,14 @@
+{
+  newAddress
+    @namespace(value: "customer")
+    @title(value: "New Customer Address")
+    @description(
+      value: "This is the fields you need to provide when creating a new address"
+    )
+    @version(value: 1) {
+    street @field(order: 1)
+    city @field(order: 2)
+    state @field(order: 3)
+    zipCode @field(order: 4)
+  }
+}

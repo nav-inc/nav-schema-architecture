@@ -1,0 +1,28 @@
+
+syntax = "proto3";
+
+package api_tweet_myTweets_myTweets;
+
+// User Tweets payload
+
+
+
+
+option go_package = "git.nav.com/engineering/nsa-go-proto/my_tweets/my_tweets";
+
+
+
+message Tweet {
+	string id = 1;
+	navtypes.ISODate date = 2;
+	string body = 3;
+}
+
+
+message MyTweets {
+    string id = 1;
+	string username = 2;
+	repeated Tweet tweets = 3;
+	Tweet pinned_tweet = 4;
+}
+

@@ -1,0 +1,21 @@
+{
+    myTweets                        @namespace(value: "api.tweet.myTweets")
+                                    @title(value: "User Tweets payload")
+                                    @description(value: "An array of tweets for a given user")
+                                    @version(value: 1)
+    {
+        id                          @field(order: 1, required: true)
+        username                    @field(order: 2)
+
+        tweets                      @field(order: 3, required: true) {
+            id                      @field(order: 1, required: true)
+            date                    @field(order: 2, required: true)
+            body                    @field(order: 3, required: true)
+        }
+        
+        pinnedTweet                 @field(order: 4) {
+            id                      @field(order: 1)
+        }
+    }
+}
+        

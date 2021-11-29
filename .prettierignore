@@ -1,0 +1,6 @@
+# Ignore artifacts:
+output
+schema
+.gitlab-ci.yml
+CHANGELOG.md
+package-lock.json

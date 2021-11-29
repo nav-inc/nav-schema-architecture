@@ -1,0 +1,29 @@
+
+syntax = "proto3";
+
+package api_tweet_stats_stats;
+
+// Tweet stats
+
+import "nav/date.proto";
+
+
+
+option go_package = "git.nav.com/engineering/nsa-go-proto/stats/stats";
+
+
+
+message Stat {
+	int64 views = 1;
+	int64 likes = 2;
+	int64 retweets = 3;
+	int64 responses = 4;
+}
+
+
+message Stats {
+    string id = 1;
+	navtypes.ISODate date = 2;
+	Stat stats = 3;
+}
+

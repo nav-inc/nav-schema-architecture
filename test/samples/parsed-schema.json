@@ -1,0 +1,1130 @@
+{
+  "kind": "Document",
+  "definitions": [
+    {
+      "kind": "ScalarTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "DateTime",
+        "loc": {
+          "start": 7,
+          "end": 15
+        }
+      },
+      "directives": [],
+      "loc": {
+        "start": 0,
+        "end": 15
+      }
+    },
+    {
+      "kind": "ScalarTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "JSON",
+        "loc": {
+          "start": 23,
+          "end": 27
+        }
+      },
+      "directives": [],
+      "loc": {
+        "start": 16,
+        "end": 27
+      }
+    },
+    {
+      "kind": "SchemaDefinition",
+      "directives": [],
+      "operationTypes": [
+        {
+          "kind": "OperationTypeDefinition",
+          "operation": "query",
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Query",
+              "loc": {
+                "start": 47,
+                "end": 52
+              }
+            },
+            "loc": {
+              "start": 47,
+              "end": 52
+            }
+          },
+          "loc": {
+            "start": 40,
+            "end": 52
+          }
+        }
+      ],
+      "loc": {
+        "start": 29,
+        "end": 54
+      }
+    },
+    {
+      "kind": "EnumTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Environment",
+        "loc": {
+          "start": 61,
+          "end": 72
+        }
+      },
+      "directives": [],
+      "values": [
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "DEV",
+            "loc": {
+              "start": 77,
+              "end": 80
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 77,
+            "end": 80
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "TEST",
+            "loc": {
+              "start": 84,
+              "end": 88
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 84,
+            "end": 88
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "INTEGRATION",
+            "loc": {
+              "start": 92,
+              "end": 103
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 92,
+            "end": 103
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "PROD",
+            "loc": {
+              "start": 107,
+              "end": 111
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 107,
+            "end": 111
+          }
+        }
+      ],
+      "loc": {
+        "start": 56,
+        "end": 113
+      }
+    },
+    {
+      "kind": "EnumTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "System",
+        "loc": {
+          "start": 120,
+          "end": 126
+        }
+      },
+      "directives": [],
+      "values": [
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "SUBSCRIPTION",
+            "loc": {
+              "start": 131,
+              "end": 143
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 131,
+            "end": 143
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "BILLING",
+            "loc": {
+              "start": 147,
+              "end": 154
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 147,
+            "end": 154
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "SALESFORCE",
+            "loc": {
+              "start": 158,
+              "end": 168
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 158,
+            "end": 168
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "MARKETPLACE",
+            "loc": {
+              "start": 172,
+              "end": 183
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 172,
+            "end": 183
+          }
+        }
+      ],
+      "loc": {
+        "start": 115,
+        "end": 185
+      }
+    },
+    {
+      "kind": "ObjectTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Sender",
+        "loc": {
+          "start": 192,
+          "end": 198
+        }
+      },
+      "interfaces": [],
+      "directives": [],
+      "fields": [
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "senderId",
+            "loc": {
+              "start": 203,
+              "end": 211
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String",
+                "loc": {
+                  "start": 213,
+                  "end": 219
+                }
+              },
+              "loc": {
+                "start": 213,
+                "end": 219
+              }
+            },
+            "loc": {
+              "start": 213,
+              "end": 220
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 203,
+            "end": 220
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "componentId",
+            "loc": {
+              "start": 224,
+              "end": 235
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String",
+              "loc": {
+                "start": 237,
+                "end": 243
+              }
+            },
+            "loc": {
+              "start": 237,
+              "end": 243
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 224,
+            "end": 243
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "taskId",
+            "loc": {
+              "start": 247,
+              "end": 253
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String",
+              "loc": {
+                "start": 255,
+                "end": 261
+              }
+            },
+            "loc": {
+              "start": 255,
+              "end": 261
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 247,
+            "end": 261
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "correlationId",
+            "loc": {
+              "start": 265,
+              "end": 278
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "ID",
+                "loc": {
+                  "start": 280,
+                  "end": 282
+                }
+              },
+              "loc": {
+                "start": 280,
+                "end": 282
+              }
+            },
+            "loc": {
+              "start": 280,
+              "end": 283
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 265,
+            "end": 283
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "confirmationRequired",
+            "loc": {
+              "start": 286,
+              "end": 306
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Boolean",
+              "loc": {
+                "start": 308,
+                "end": 315
+              }
+            },
+            "loc": {
+              "start": 308,
+              "end": 315
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 286,
+            "end": 315
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "authToken",
+            "loc": {
+              "start": 318,
+              "end": 327
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String",
+              "loc": {
+                "start": 329,
+                "end": 335
+              }
+            },
+            "loc": {
+              "start": 329,
+              "end": 335
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 318,
+            "end": 335
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "topic",
+            "loc": {
+              "start": 338,
+              "end": 343
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "String",
+              "loc": {
+                "start": 345,
+                "end": 351
+              }
+            },
+            "loc": {
+              "start": 345,
+              "end": 351
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 338,
+            "end": 351
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "timestamp",
+            "loc": {
+              "start": 363,
+              "end": 372
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "DateTime",
+                "loc": {
+                  "start": 374,
+                  "end": 382
+                }
+              },
+              "loc": {
+                "start": 374,
+                "end": 382
+              }
+            },
+            "loc": {
+              "start": 374,
+              "end": 383
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 363,
+            "end": 383
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "context",
+            "loc": {
+              "start": 386,
+              "end": 393
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "JSON",
+              "loc": {
+                "start": 395,
+                "end": 399
+              }
+            },
+            "loc": {
+              "start": 395,
+              "end": 399
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 386,
+            "end": 399
+          }
+        }
+      ],
+      "loc": {
+        "start": 187,
+        "end": 401
+      }
+    },
+    {
+      "kind": "EnumTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Operation",
+        "loc": {
+          "start": 433,
+          "end": 442
+        }
+      },
+      "directives": [],
+      "values": [
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "PROCESS",
+            "loc": {
+              "start": 447,
+              "end": 454
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 447,
+            "end": 454
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "SYNCHRONIZE",
+            "loc": {
+              "start": 458,
+              "end": 469
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 458,
+            "end": 469
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "CHANGE",
+            "loc": {
+              "start": 473,
+              "end": 479
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 473,
+            "end": 479
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "CANCEL",
+            "loc": {
+              "start": 483,
+              "end": 489
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 483,
+            "end": 489
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "ACKNOWLEDGE",
+            "loc": {
+              "start": 493,
+              "end": 504
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 493,
+            "end": 504
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "CONFIRM",
+            "loc": {
+              "start": 508,
+              "end": 515
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 508,
+            "end": 515
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "RESPOND",
+            "loc": {
+              "start": 519,
+              "end": 526
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 519,
+            "end": 526
+          }
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "SHOW",
+            "loc": {
+              "start": 530,
+              "end": 534
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 530,
+            "end": 534
+          }
+        }
+      ],
+      "loc": {
+        "start": 428,
+        "end": 536
+      }
+    },
+    {
+      "kind": "UnionTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "EventData",
+        "loc": {
+          "start": 544,
+          "end": 553
+        }
+      },
+      "directives": [],
+      "types": [
+        {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Subscription",
+            "loc": {
+              "start": 556,
+              "end": 568
+            }
+          },
+          "loc": {
+            "start": 556,
+            "end": 568
+          }
+        },
+        {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "Bill",
+            "loc": {
+              "start": 571,
+              "end": 575
+            }
+          },
+          "loc": {
+            "start": 571,
+            "end": 575
+          }
+        },
+        {
+          "kind": "NamedType",
+          "name": {
+            "kind": "Name",
+            "value": "IMFF",
+            "loc": {
+              "start": 578,
+              "end": 582
+            }
+          },
+          "loc": {
+            "start": 578,
+            "end": 582
+          }
+        }
+      ],
+      "loc": {
+        "start": 538,
+        "end": 582
+      }
+    },
+    {
+      "kind": "ObjectTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Payload",
+        "loc": {
+          "start": 590,
+          "end": 597
+        }
+      },
+      "interfaces": [],
+      "directives": [],
+      "fields": [
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "operation",
+            "loc": {
+              "start": 602,
+              "end": 611
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Operation",
+              "loc": {
+                "start": 613,
+                "end": 622
+              }
+            },
+            "loc": {
+              "start": 613,
+              "end": 622
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 602,
+            "end": 622
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "data",
+            "loc": {
+              "start": 625,
+              "end": 629
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "ListType",
+            "type": {
+              "kind": "NonNullType",
+              "type": {
+                "kind": "NamedType",
+                "name": {
+                  "kind": "Name",
+                  "value": "EventData",
+                  "loc": {
+                    "start": 632,
+                    "end": 641
+                  }
+                },
+                "loc": {
+                  "start": 632,
+                  "end": 641
+                }
+              },
+              "loc": {
+                "start": 632,
+                "end": 642
+              }
+            },
+            "loc": {
+              "start": 631,
+              "end": 643
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 625,
+            "end": 643
+          }
+        }
+      ],
+      "loc": {
+        "start": 585,
+        "end": 645
+      }
+    },
+    {
+      "kind": "ObjectTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Event",
+        "loc": {
+          "start": 652,
+          "end": 657
+        }
+      },
+      "interfaces": [],
+      "directives": [],
+      "fields": [
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "eventId",
+            "loc": {
+              "start": 662,
+              "end": 669
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String",
+                "loc": {
+                  "start": 671,
+                  "end": 677
+                }
+              },
+              "loc": {
+                "start": 671,
+                "end": 677
+              }
+            },
+            "loc": {
+              "start": 671,
+              "end": 678
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 662,
+            "end": 678
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "versionId",
+            "loc": {
+              "start": 681,
+              "end": 690
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "String",
+                "loc": {
+                  "start": 692,
+                  "end": 698
+                }
+              },
+              "loc": {
+                "start": 692,
+                "end": 698
+              }
+            },
+            "loc": {
+              "start": 692,
+              "end": 699
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 681,
+            "end": 699
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "envId",
+            "loc": {
+              "start": 702,
+              "end": 707
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Environment",
+                "loc": {
+                  "start": 709,
+                  "end": 720
+                }
+              },
+              "loc": {
+                "start": 709,
+                "end": 720
+              }
+            },
+            "loc": {
+              "start": 709,
+              "end": 721
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 702,
+            "end": 721
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "sender",
+            "loc": {
+              "start": 724,
+              "end": 730
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NonNullType",
+            "type": {
+              "kind": "NamedType",
+              "name": {
+                "kind": "Name",
+                "value": "Sender",
+                "loc": {
+                  "start": 732,
+                  "end": 738
+                }
+              },
+              "loc": {
+                "start": 732,
+                "end": 738
+              }
+            },
+            "loc": {
+              "start": 732,
+              "end": 739
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 724,
+            "end": 739
+          }
+        },
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "payload",
+            "loc": {
+              "start": 742,
+              "end": 749
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Payload",
+              "loc": {
+                "start": 751,
+                "end": 758
+              }
+            },
+            "loc": {
+              "start": 751,
+              "end": 758
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 742,
+            "end": 758
+          }
+        }
+      ],
+      "loc": {
+        "start": 647,
+        "end": 760
+      }
+    },
+    {
+      "kind": "ObjectTypeDefinition",
+      "name": {
+        "kind": "Name",
+        "value": "Query",
+        "loc": {
+          "start": 789,
+          "end": 794
+        }
+      },
+      "interfaces": [],
+      "directives": [],
+      "fields": [
+        {
+          "kind": "FieldDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "navEventEnvelope",
+            "loc": {
+              "start": 801,
+              "end": 817
+            }
+          },
+          "arguments": [],
+          "type": {
+            "kind": "NamedType",
+            "name": {
+              "kind": "Name",
+              "value": "Event",
+              "loc": {
+                "start": 819,
+                "end": 824
+              }
+            },
+            "loc": {
+              "start": 819,
+              "end": 824
+            }
+          },
+          "directives": [],
+          "loc": {
+            "start": 801,
+            "end": 824
+          }
+        }
+      ],
+      "loc": {
+        "start": 784,
+        "end": 826
+      }
+    }
+  ],
+  "loc": {
+    "start": 0,
+    "end": 827
+  }
+}

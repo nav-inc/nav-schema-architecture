@@ -1,0 +1,117 @@
+stages:
+  - Build
+  - 'Node Modules'
+  - Test
+  - Generate
+  - Publish
+
+variables:
+  IMG: "${CI_REGISTRY_IMAGE}"
+  GOINSTALLPATH: "/go"
+  WORKDIR: "${CI_PROJECT_DIR}"
+
+build:
+  stage: Build
+  services:
+    - docker:dind
+  image: registry.nav.engineering/goldmaster/newbuilder:main
+  before_script:
+    - docker login -u gitlab-ci-token -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
+  tags: [ newbuilder ]
+  script:
+    - docker build --rm --pull -f Dockerfile -t $IMG --build-arg GIT_USER="${GIT_USER}" --build-arg GIT_ACCESS_TOKEN="${GIT_ACCESS_TOKEN}" --build-arg WORKDIR="${WORKDIR}" --build-arg GOINSTALLPATH="${GOINSTALLPATH}" .
+    - docker push $IMG
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $GITLAB_USER_NAME != $GIT_USER'
+      changes:
+        - Dockerfile
+
+# Install node modules through here instead of in the docker container build because we're using the project dir as WORKDIR
+# And Gitlab checks out the repo to the project dir, removing anything added to it during container build
+'Node Modules':
+  image: $IMG
+  stage: 'Node Modules'
+  artifacts:
+    paths:
+      - node_modules/
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  script:
+    - npm ci --production=false --also=dev --include=peer
+
+test:
+  image: $IMG
+  stage: Test
+  dependencies:
+    - 'Node Modules'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $GITLAB_USER_NAME == $GIT_USER'
+      changes:
+        - src/**/*
+        - schema/**/*
+        - output/**/*
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  script:
+    - npm test
+
+compile_go:
+  image: $IMG
+  stage: Test
+  dependencies:
+    - 'Node Modules'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $GITLAB_USER_NAME == $GIT_USER'
+      changes:
+        - src/**/*
+        - schema/**/*
+        - output/**/*
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+  script:
+    - cd $WORKDIR/output/go/nsa
+    # verify go builds cleanly, then delete binary output
+    - go build ./...
+    - go clean
+
+generate:
+  image: $IMG
+  stage: Generate
+  dependencies:
+    - 'Node Modules'
+  script:
+    - echo "Generating code and schemas ${CI_PROJECT_PATH}"
+    - git config push.default simple
+    - git config --global url."https://".insteadOf git:/
+    - git config --global user.email "${GIT_USER}@nav.com"
+    - git config --global user.name "${GIT_USER}"
+    - git remote set-url origin https://${GIT_USER}:${GIT_ACCESS_TOKEN}@git.nav.com/${CI_PROJECT_PATH}.git
+    - git fetch --all --tags
+    - git checkout ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
+    - git reset --hard origin/${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
+    - npm run generate-output:commit
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $GITLAB_USER_NAME != $GIT_USER'
+      changes:
+        - src/**/*
+        - schema/**/*
+
+publish:
+  image: $IMG
+  stage: Publish
+  dependencies:
+    - 'Node Modules'
+  script:
+    - echo "Publishing generated packages"
+    - git config push.default simple
+    - git config --global url."https://".insteadOf git:/
+    - git config --global user.email "${GIT_USER}@nav.com"
+    - git config --global user.name "${GIT_USER}"
+    - git remote set-url origin https://${GIT_USER}:${GIT_ACCESS_TOKEN}@git.nav.com/${CI_PROJECT_PATH}.git
+    - git fetch --all --tags
+    - git checkout master
+    - git reset --hard origin/master
+    - 'npm version patch -m "ci(publish): post-merge publish new version of nav schema" --unsafe-perm'
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH && $GITLAB_USER_NAME != $GIT_USER'
+      changes:
+        - output/**/*

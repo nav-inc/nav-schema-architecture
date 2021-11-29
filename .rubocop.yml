@@ -1,0 +1,139 @@
+---
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+Gemspec/DateAssignment:
+  Enabled: true
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+# Autocorrect line length where possible, but allow for arbitrarily long lines
+Layout/LineLength:
+  AutoCorrect: true
+  Max: 1000
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/SpaceBeforeBrackets:
+  Enabled: true
+Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/DeprecatedConstants:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: false
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+Lint/EmptyBlock:
+  Enabled: true
+Lint/EmptyClass:
+  Enabled: true
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+Lint/NumberedParameterAssignment:
+  Enabled: true
+Lint/OrAssignmentToConstant:
+  Enabled: true
+Lint/RaiseException:
+  Enabled: true
+Lint/RedundantDirGlobSort:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Lint/SymbolConversion:
+  Enabled: true
+Lint/ToEnumArguments:
+  Enabled: true
+Lint/TripleQuotes:
+  Enabled: true
+Lint/UnexpectedBlockArity:
+  Enabled: true
+Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Naming/FileName:
+  Enabled: false
+Naming/MethodName:
+  Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
+Naming/RescuedExceptionsVariableName:
+  PreferredName: exception
+Naming/VariableName:
+  Enabled: false
+Style/ArgumentsForwarding:
+  Enabled: true
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/CollectionCompact:
+  Enabled: true
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+Style/Documentation:
+  Enabled: false
+Style/EndlessMethod:
+  Enabled: true
+Style/ExponentialNotation:
+  Enabled: true
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/HashConversion:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashExcept:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+Style/Lambda:
+  EnforcedStyle: literal
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+Style/NegatedIfElseCondition:
+  Enabled: true
+Style/NilLambda:
+  Enabled: true
+Style/RedundantArgument:
+  Enabled: true
+Style/RedundantFetchBlock:
+  Enabled: true
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+Style/RedundantRegexpEscape:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
+Style/StringChars:
+  Enabled: true
+Style/StringLiterals:
+  ConsistentQuotesInMultiline: true
+  EnforcedStyle: double_quotes
+Style/SwapValues:
+  Enabled: true
+Style/SymbolArray:
+  Enabled: false

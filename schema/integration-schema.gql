@@ -1,0 +1,98 @@
+# Adapted from Gildas Garcia 
+# https://github.com/marmelab/GraphQL-example/blob/master/schema.graphql
+
+schema {
+  query: Query
+}
+
+scalar Any
+scalar Date
+scalar DateTime
+scalar Phone
+scalar Email
+scalar UUID
+
+enum Categories {
+  AUTOMOTIVE
+  AVIATION
+  MARINE
+  BEAUTY
+  EDUCATION
+  FINANCE
+  RESTAURANT
+  ADVERTISING
+  RETAIL
+  GOVERNMENT
+  MEDICAL
+  LAW
+  MEDIA 
+  SCIENCE 
+  TECHNOLOGY
+  ENTREPRENEUR
+}
+
+enum AccountType {
+  BUSINESS
+  CREATOR
+}
+
+type Tweet {
+    id: ID!
+    body: String!
+    date: Date!
+    author: User!
+    stats: Stat
+    conversations: [Tweet]
+}
+
+type User {
+    id: UUID!
+    username: String!
+    firstName: String
+    lastName: String
+    fullName: String
+    avatarUrl: String
+    bio: String
+    location: String
+    website: String
+    birthdate: Date
+    mobileNumber: Phone
+    email: Email
+    tweets: [Tweet]
+    retweets: [Tweet]
+    replies: [Tweet]
+    likes: [Tweet]
+    pinnedTweet: Tweet
+    signedUpOn: Date
+}
+
+# Professional User
+extend type User {
+  category: Categories
+  accountType: AccountType
+  verified: Boolean
+}
+
+type Stat {
+    views: Int
+    likes: Int
+    retweets: Int
+    responses: Int
+}
+
+type Notification {
+    id: ID
+    date: Date
+    type: String
+}
+
+type Meta {
+    count: Int
+}
+
+# message definitions
+type Query {
+  myTweets: User
+  stats: Tweet
+  profile: User
+}

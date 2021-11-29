@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://nav.com/api.tweet.myTweets.schema.json/v1",
+    "title": "User Tweets payload",
+    "description": "An array of tweets for a given user",
+    "required": [],
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+        },
+        "username": {
+            "type": "string"
+        },
+        "tweets": {
+            "$ref": "#Tweet"
+        },
+        "pinnedTweet": {
+            "$ref": "#Tweet"
+        }
+    },
+    "definitions": {
+        "Tweet": {
+            "$id": "#Tweet",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ]
+        }
+    }
+}
