@@ -2,7 +2,13 @@
 
 NSA is using GraphQL to define a common data model (CDM) and event/message formats. The event or message formats are defined as GraphQL queries from the CDM.
 
-This approach allows us to reuse graphql tools (parsers, documentation...) and focus only on building custom generators that take message format and generate language specific client libraries as well json-schema and Protobuf message definitions from the CDM.
+Using GraphQL allows a contract developer to describe both the data model and message format at the same time, rather than needing two sets of semantics. This is useful when an attribute may be optional on the underlying data model, but required when that model is used in a specific message.
+
+The primary purpose of NSA is to generate code and schemas in multiple languages, all based on the root definition using GraphQL. The outputs can be other schema languages, such as protobuf or JSON Schema, or code, with Go, Ruby, and Python currently supported.
+
+The benefit of a common data model comes from the ability to easily disseminate its implementation across multiple teams and services. A build pipeline will watch for schema changes on a feature branch, then launch a secondary pipeline to generate the output for all target languages. That output is then committed back to the feature branch, where a developer can review the changes before merging to the main branch. All relevant, language-specific output packages are rebuilt, versioned and tagged.
+
+[GraphQL Syntax Used for a Novel Approach to Schema Validation and Code Generation](https://www.infoq.com/news/2022/05/graphql-schema-validation)
 
 ## Why GraphQL?
 
@@ -215,7 +221,7 @@ The directives that currently used are:
 
 `@namespace` that map to the json-schema namespace, the golang package and the ruby module associated to generated code/schema.
 `@title` and `@description` are just comments added to the generated code.
-`@version` should be used to refer to the major version of the schema (SemVer). Message definitions should be designed with (compatibility)[https://www.xml.com/pub/a/2004/07/21/design.html}] in mind for the minor versions.
+`@version` should be used to refer to the major version of the schema (SemVer). Message definitions should be designed with [compatibility](https://www.xml.com/pub/a/2004/07/21/design.html) in mind for the minor versions.
 
 The following values of the `@field` directive have been implemented:
 

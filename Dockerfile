@@ -36,7 +36,7 @@ RUN apt-get update \
   software-properties-common \
   yarn \
   zlib1g-dev \
-	&& rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/*
 
 # Get Go and its dependencies
 RUN curl -sSfL https://golang.org/dl/go1.16.8.linux-amd64.tar.gz | tar xz -C /usr/local
@@ -51,7 +51,7 @@ COPY . .
 
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.27.0 \
   && mv ./bin/* /usr/local/bin/
-RUN GO111MODULE=on go get -v -u github.com/ory/go-acc golang.org/x/tools/cmd/goimports github.com/client9/misspell/cmd/misspell cloud.google.com/go
+RUN GO111MODULE=on go get -v -u github.com/ory/go-acc golang.org/x/tools/cmd/goimports github.com/client9/misspell/cmd/misspell cloud.google.com/go github.com/yoheimuta/protolint/cmd/protolint
 
 RUN apt-add-repository ppa:brightbox/ruby-ng
 RUN apt-get update \
@@ -67,4 +67,4 @@ RUN gem install bundler rubocop
 RUN pip3 install --upgrade pip distlib setuptools
 RUN pip3 install yapf unify bumpversion autoflake
 
-# CHANGE THIS COMMENT TO FORCE A DOCKER IMAGE REBUILD 1
+# CHANGE THIS COMMENT TO FORCE A DOCKER IMAGE REBUILD 4

@@ -1,4 +1,4 @@
-const Date = {
+const ISODate = {
   type: 'datetime.date',
   inputType: 'str',
   instantiate: 'datetime.date.fromisoformat'
@@ -8,6 +8,10 @@ const DateTime = {
   type: 'datetime.datetime',
   inputType: 'str',
   instantiate: 'dateutil_parser.isoparse'
+}
+
+const CurrencyCent = {
+  type: 'int',
 }
 
 const Any = {
@@ -46,8 +50,9 @@ const converter = {
 }
 
 module.exports = {
-  Date,
+  ISODate,
   DateTime,
+  CurrencyCent,
   UUID,
   Phone,
   ZIPCode,

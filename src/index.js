@@ -51,7 +51,7 @@ function parse(
   R.forEach(
     (file) =>
       writeFileSafe(...prepareFile(file.outputFileName, file.toDir, file.path, file.extension, file.code, messageDefinitionDir)),
-    code
+    code.filter(Boolean)
   )
 
   R.forEach(({ staticDir, toDir }) => {

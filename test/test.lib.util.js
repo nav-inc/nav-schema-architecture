@@ -155,6 +155,7 @@ describe('Parser', function () {
     const b = 1
 
     strictEqual(firstUpperCase(a), 'Abc')
+    console.log(typeof b)
     strictEqual(firstUpperCase(b), '')
     strictEqual(capitalize(a), 'Abc')
   })
@@ -163,6 +164,7 @@ describe('Parser', function () {
     const b = 1
 
     strictEqual(firstLowerCase(a), 'abc')
+    console.log(typeof b)
     strictEqual(firstLowerCase(b), '')
   })
 })

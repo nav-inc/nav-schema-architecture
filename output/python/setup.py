@@ -11,7 +11,7 @@ setup(
     author='JJ Dubray',
     classifiers=['Programming Language :: Python :: 3.8'],
     description='Nav common data model and event formats',
-    install_requires=['dateutil'],
+    install_requires=['python-dateutil'],
     keywords='schema',
     long_description_content_type='text/markdown',
     long_description=README,
@@ -21,5 +21,5 @@ setup(
     python_requires='>= 3.8',
     setup_requires='pip >= 18',
     url='https://git.nav.com/engineering/nav-schema-architecture/output/python',
-    version='0.0.88',
+    version='1.1.0',
 )

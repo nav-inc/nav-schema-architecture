@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
-const { exec } = require('promisify-child-process')
+const { spawn } = require('promisify-child-process')
 
 async function main() {
   const goModTidyCmd = 'go mod tidy'
   console.log('\n', chalk.blue('Resolving go dependencies'), chalk.yellow(goModTidyCmd))
   try {
-    let { stdout, stderr } = await exec(goModTidyCmd, {
+    const { stdout, stderr } = await spawn(goModTidyCmd.split(' ')[0], goModTidyCmd.split(' ').slice(1), {
       cwd: 'output/go',
+      encoding: 'utf8',
     })
     console.log(stdout, stderr)
   } catch (e) {

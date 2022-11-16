@@ -1,6 +1,6 @@
 {
   "name": "nav-schema-architecture",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/nav-inc/nav-schema-architecture",
   "repository": {
     "type": "git",
@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "chalk": "^4.1.2",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "generate-changelog": "^1.8.0",
-    "mocha": "^8.3.0",
+    "mocha": "^10.1.0",
     "nyc": "^15.1.0",
-    "prepend-file": "^2.0.0",
+    "prepend-file": "^2.0.1",
     "prettier": "2.4.1",
     "promisify-child-process": "^4.1.1",
-    "scripty": "^2.0.0"
+    "scripty": "^2.1.0"
   }
 }

@@ -182,7 +182,7 @@ const typeFor = (
     .on(isAScalar, (t, scalarName = name(t)) => {
       const scalarType = scalars[scalarName]
       if (R.isNil(scalarType)) {
-        throw `Scalar type not defined ${scalarName}`
+        throw `Scalar type not defined: ${scalarName}`
       }
       scalarType.scalar = stringFormatter(scalarName, {
         element: 'ScalarTypeDefinition',
@@ -208,7 +208,20 @@ const typeFor = (
           return propType
         })
     )
-    .on(isAUnion, 'Any')
+    .on(isAUnion, () => {
+      const scalarType = scalars['Any']
+      if (R.isNil(scalarType)) {
+        throw `Scalar type not defined: Any`
+      }
+      scalarType.scalar = stringFormatter('Any', {
+        element: 'ScalarTypeDefinition',
+      })
+      refTypes.push({
+        type: scalarType,
+        isScalar: true,
+      })
+      return scalarType
+    })
     .on(isObjectTypeDefinition, (t) => {
       const objectField = findElement(propName, messageFields)
       const childMessageFields = selections(objectField)

@@ -17,31 +17,28 @@ const {
   projectionTypes,
   fieldPattern,
   set,
-  noNullElementArray,
   extractName,
   extractValue,
   extractTypeFromProp,
   exists,
   log,
   fileDescriptor,
-  fileWith,
   extractDir,
   isString,
   tab,
   additionalCodeFrom,
-  additionalCode,
   isFieldTypeAnEnum,
   typeConverterFrom,
   setOfFilesFrom,
   foldObject,
   modifierSelector,
-  env,
 } = require('../lib')
 
 const { EOL } = require('os')
 
 const scalars = require('../../schema/scalars/go-scalars.js')
 const convertType = typeConverterFrom(scalars)
+const canBeZeroTypes = ['int64','double','bool']
 
 const enumDef = (e, values) => `
 type ${e} string
@@ -88,28 +85,40 @@ func (o ${name}) Validate() error {
       const field = capitalize(rawFieldName)
       const pattern = fieldPattern(valueForKey(v))
       let requiredError = ''
-      let validationError = ''
       let patternError = ''
-      if (pattern) {
-        patternError = `
-    matched${field}, err := regexp.MatchString(\"${pattern}\", *o.${field})
-    if !matched${field} || err != nil {
-        return fmt.Errorf("invalid ${field} value of ${name} (%s)", err)
-    }
-    `
-        if (!isRequired) {
-          patternError = `
-    if o.${field} != nil {${patternError}}`
-        }
-      }
+      let validationError = ''
+
       if (isRequired) {
         requiredError = `
     if o.${field} == nil {
         return fmt.Errorf("${field} is a required property of ${name}")
-    }
-    `
+    }`
+        if (isArray) {
+          requiredError += ` else if len(o.${field}) == 0 {
+      return fmt.Errorf("${field} is a required property of ${name}")
+    }`
+        } else if (!canBeZeroTypes.includes(convertType(ftv))) {
+          requiredError += ` else if reflect.ValueOf(*o.${field}).IsZero() {
+        return fmt.Errorf("${field} is a required property of ${name}")
+      }`
+        }
       }
-      if ((isString(fields[rawFieldName]) && !pattern) || isFieldTypeAnEnum(ftv, isEnumProps)) {
+
+      if (pattern) {
+        patternError = `
+    matched${field}, err := regexp.MatchString(\"${pattern}\", *o.${field})
+    if !matched${field} || err != nil {
+        return fmt.Errorf("invalid ${field} value of (%s) for ${name}: (%w)", *o.${field}, err)
+    }`
+        if (!isRequired) {
+          patternError = `
+    if o.${field} != nil {
+      ${isArray ? patternError : `if !reflect.ValueOf(*o.${field}).IsZero() {${patternError}}`}
+    }`
+        }
+      }
+
+      if ((isString(valueForKey(v)) && !pattern) || isFieldTypeAnEnum(ftv, isEnumProps)) {
         if (isArray) {
           validationError = `
     for _, ${rawFieldName}Element := range o.${field} {
@@ -132,7 +141,7 @@ func (o ${name}) Validate() error {
     if o.${field} != nil {${validationError}}`
         }
       }
-      return patternError + requiredError + validationError
+      return requiredError + patternError + validationError
     }, fields).join('')}
     return nil
 }
@@ -172,14 +181,15 @@ const generateGolang = (
     const generatedEnums = []
 
     const goStructs = `
-package ${R.replace(/\./g, '_', namespace)}_${name}
+package ${R.replace(/\./g, '_', namespace)}${version > 1 ? `_v${version}`: ''}_${name}
 
 import (
   "fmt"
-  "${env('GIT_ROOT', 'git.nav.com/engineering')}/nav-schema-architecture/output/go/nsa/enums"
+  "git.nav.com/engineering/nav-schema-architecture/output/go/nsa/enums"
 	"encoding/json"
 	"errors"
   "regexp"
+  "reflect"
 )
 
 // ${title}
@@ -211,15 +221,42 @@ func (o ${capitalize(name)}) Validate() error {
       const isReq = isRequired.includes(rpn)
       const isArr = isArray.includes(rpn)
       const field = capitalize(rpn)
+      const pattern = fieldPattern(v?.type)
+      const fieldType = extractTypeFromProp(v)
+      let patternError = ''
       let requiredError = ''
       let validationError = ''
+
       if (isReq) {
         requiredError = `
     if o.${field} == nil {
-        return fmt.Errorf("${field} is a required property of ${capitalize(name)}")
-    }
-    `
+        return fmt.Errorf("${field} is a required property of ${name}")
+    }`
+        if (isArr) {
+          requiredError += ` else if len(o.${field}) == 0 {
+        return fmt.Errorf("${field} is a required property of ${name}")
+    }`
+        } else if (!canBeZeroTypes.includes(convertType(fieldType))) {
+          requiredError += ` else if reflect.ValueOf(*o.${field}).IsZero() {
+        return fmt.Errorf("${field} is a required property of ${name}")
+    }`
+        }
       }
+
+      if (pattern) {
+        patternError = `
+    matched${field}, err := regexp.MatchString(\"${pattern}\", *o.${field})
+    if !matched${field} || err != nil {
+        return fmt.Errorf("invalid ${field} value of (%s) for ${name}: (%w)", *o.${field}, err)
+    }`
+        if (!isReq) {
+          patternError = `
+    if o.${field} != nil {
+        ${isArr ? patternError : `if !reflect.ValueOf(*o.${field}).IsZero() {${patternError}}`}
+    }`
+        }
+      }
+
       if (isEntity(rpn, rootStruct)) {
         if (isArr) {
           validationError = `
@@ -246,7 +283,7 @@ func (o ${capitalize(name)}) Validate() error {
           }
         }
       }
-      return requiredError + validationError
+      return requiredError + patternError + validationError
     }, rootStruct).join('')}
     return nil
 }
