@@ -1,9 +1,13 @@
-const Date = {
-  type: "time.Time"
+const ISODate = {
+  type: "civil.Date"
 }
 
 const DateTime = {
   type: 'time.Time',
+}
+
+const CurrencyCent = {
+  type: 'int64',
 }
 
 const UUID = {
@@ -33,7 +37,7 @@ const converter = {
   String: 'string',
   ID: 'string',
   Int: 'int64',
-  Float: 'double',
+  Float: 'float64',
   Boolean: 'bool',
   Any: 'json.RawMessage',
 }
@@ -60,8 +64,9 @@ const match = (x) => ({
 const stringFormatter = (p, context) => match(p).on('iD', 'ID').otherwise()
 
 module.exports = {
-  Date,
+  ISODate,
   DateTime,
+  CurrencyCent,
   UUID,
   Phone,
   Email,

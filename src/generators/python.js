@@ -48,7 +48,7 @@ const { EOL } = require('os')
 
 const formatter = (propName, format) => (format ? R.replace('%s', propName, format) : propName)
 const validationRules = (fieldName, fieldType, fieldClass, pattern, isRequired, isArray, isEnum, format, isRequiredOnly) => {
-  const enumCheck = isEnum ? `\t\tfrom_${fieldType}(${formatter(fieldName, format)})` + EOL : ''
+  const enumCheck = isEnum ? `\t\tfrom_${extractType3(fieldType)}(${formatter(fieldName, format)})` + EOL : ''
 
   let requiredCheck = isRequired ? `\t\tis_required(${formatter(fieldName, format)})` + EOL : ''
   let arrayCheck = isArray ? `\t\tfrom_list(from_${extractType3(fieldType)}, ${formatter(fieldName, format)})` + EOL : ''
@@ -282,7 +282,7 @@ ${generatedScalarCode}
 
 ${generatedTypeCode}
 
-class ${rootName}:
+class ${rootName}${version > 1 ? `_V${version}`: ''}:
 
 \tdef __init__(self, *, ${classVars.join(', ')}) -> None:
 
@@ -365,7 +365,7 @@ def from_${rootName}(x: Any) -> ${rootName}:
 }
 
 const schemaType = 'python'
-const version = '1.0.0'
+const version = '1.1.0'
 
 module.exports = {
   generate,

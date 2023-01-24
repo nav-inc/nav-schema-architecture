@@ -6,7 +6,7 @@ $LOAD_PATH.push(File.dirname(__FILE__))
 Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.7"
   s.name        = "nav-schema-architecture"
-  s.version     = "0.0.88"
+  s.version     = "1.1.0"
   s.authors     = ["JJ Dubray"]
   s.email       = ["jdubray@gmail.com"]
   s.homepage    = "https://git.nav.com/engineering/nav-schema-architecture/output/ruby"

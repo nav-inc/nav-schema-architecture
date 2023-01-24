@@ -1,5 +1,5 @@
-const Date = {
-  type: "string",
+const ISODate = {
+  type: "String",
   pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
 }
 
@@ -44,8 +44,9 @@ const converter = {
 }
 
 module.exports = {
-  Date,
+  ISODate,
   DateTime,
+  CurrencyCent,
   Phone,
   Email,
   ZIPCode,

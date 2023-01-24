@@ -7,6 +7,7 @@ const pythonPackages = require('../python/packages')
 const goimports = require('../format/go')
 const gomod = require('../format/go-mod')
 const rubocop = require('../format/ruby')
+const protolint = require('../format/protobuf')
 const yapf = require('../format/python')
 
 async function main() {
@@ -18,6 +19,7 @@ async function main() {
     await goimports()
     await gomod()
     await rubocop()
+    await protolint()
     await yapf()
   } catch (e) {
     console.error(chalk.red(e))

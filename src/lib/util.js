@@ -124,8 +124,9 @@ const set = (arr, prop) =>
       const uniqueSet = []
       const pivot = {}
       arr.forEach((i) => {
-        if (R.isNil(pivot[i[prop]])) uniqueSet.push(i)
-        pivot[i[prop]] = i
+        const typeName = typeof prop === 'string' ? i[prop] : prop(i)
+        if (R.isNil(pivot[typeName])) uniqueSet.push(i)
+        pivot[typeName] = i
       })
       return uniqueSet
     })

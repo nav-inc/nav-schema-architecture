@@ -5,6 +5,7 @@ const {
   schemaTypes,
   rootType,
   __getFields,
+  __getType: getTypeOfField,
   clone,
   exists,
   set,
@@ -26,7 +27,7 @@ const {
   tab,
   key,
   order,
-  env,
+  valueForKey,
 } = require('../lib')
 
 const { EOL } = require('os')
@@ -49,20 +50,34 @@ ${mapIndexed(
 ).join(EOL)}
 }`
 
-const messageDef = (
-  { name, fields, directives },
-  isRequiredProps,
-  isArrayProps,
-  isEnumProps,
-  stringFormatter
-) => `message ${name} {
-${mapIndexed(
-  (v, idx) => `\t${isString(value(v)) ? value(v) : convertType(fieldType(value(v)))} ${key(v)} = ${order(directives[key(v)])};`,
-  fields
-).join(EOL)}
-}`
+const messageDef = ({ name, fields, directives }, _isRequiredProps, isArrayProps, isEnumProps, _stringFormatter) => {
+  return `message ${name} {
+    ${mapIndexed(
+      (v, idx) => {
+        const fieldName = key(v)
+        const fieldType = getTypeOfField(valueForKey(v)) || valueForKey(v)
+        const isArray = isArrayProps.includes(fieldName)
+        const isEnum = exists(R.find((e) => e.pName === fieldType, isEnumProps))
+        return `${tab(idx)}${isArray ? 'repeated ' : ''}${isEnum ? 'enums.' : ''}${convertType(
+          isString(value(v)) ? value(v) : fieldTypeConverter(value(v))
+        )} ${key(v)} = ${order(directives[key(v)])};`
+      },
+      fields.sort((a, b) => {
+        if (parseInt(order(directives[key(a)])) > parseInt(order(directives[key(b)]))) {
+          return 1
+        }
 
-const fieldType = (prop) => R.pathOr('undefined_type_error', ['type'], prop)
+        if (parseInt(order(directives[key(a)])) < parseInt(order(directives[key(b)]))) {
+          return -1
+        }
+
+        return 0
+      })
+    ).join(EOL)}
+}`
+}
+
+const fieldTypeConverter = (prop) => R.pathOr('undefined_type_error', ['type'], prop)
 
 const convertType = (t) => R.or(typeConverter(t), t)
 
@@ -70,11 +85,7 @@ const generate = (message, schema, stringFormatter = scalars.stringFormatter) =>
   return generateProtobuf({ message, schema: clone(schema), stringFormatter }, metadata(message))
 }
 
-const generateProtobuf = (
-  { message, schema, stringFormatter },
-  { name, title, namespace, version, node },
-  root = rootType(schema, name)
-) => {
+const generateProtobuf = ({ message, schema, stringFormatter }, { name, title, namespace, version }, root = rootType(schema, name)) => {
   const st = processFieldModifiers(schemaTypes(schema))
   const protoTypes = set(
     projectionTypes({
@@ -87,25 +98,44 @@ const generateProtobuf = (
       enumDef,
       stringFormatter,
     }),
-    'type'
+    (i) => (typeof i.type === 'object' ? i.type?.type : i.type)
   )
 
   const generatedEnums = []
-  const entity = camelToSnakeCase(R.last(namespace.split('.')))
-  const rootStruct = R.last(protoTypes)
+  const generatedScalars = []
+  const entity = `${camelToSnakeCase(R.last(namespace.split('.')))}${version > 1 ? `_v${version}` : ''}`
+  const rootStruct = R.last(protoTypes).sort((a, b) => {
+    const aDirectives = __directives(a)
+    const bDirectives = __directives(b)
+    if (parseInt(order(aDirectives[extractName(a)])) > parseInt(order(bDirectives[extractName(b)]))) {
+      return 1
+    }
+
+    if (parseInt(order(aDirectives[extractName(a)])) < parseInt(order(bDirectives[extractName(b)]))) {
+      return -1
+    }
+
+    return 0
+  })
   const rootPropNames = R.map(extractName, rootStruct)
   const rootTypeFields = __getFields(R.head(R.filter((s) => __name(s) === root, st)))
   const rootStructTypes = R.map((p) => R.head(R.filter((rtf) => __name(rtf) === p.name, rootTypeFields)), rootStruct)
-  const isRequired = R.map(
+
+  // TODO: enable for non-optional fields in proto3 when the rest of the nav ecosystem supports proto3 optional fields
+  /* const isRequired = R.map(
     (p) => p.value,
     noNullElementArray(R.map((p) => (p?.type?.isRequired === true ? p.name : undefined), rootStructTypes))
-  )
+  ) */
+
   const isArray = R.map(
     (p) => p.value,
     noNullElementArray(R.map((p) => (p?.type?.isArray === true ? p.name : undefined), rootStructTypes))
   )
 
-  const protoTypesGen = R.map(({ addOn, isEnum, type }) => {
+  const protoTypesGen = R.map(({ addOn, isEnum, isScalar, type }) => {
+    if (isScalar || R.path('scalar', type)) {
+      generatedScalars.push(type)
+    }
     if (!isEnum) {
       return addOn
     }
@@ -113,19 +143,23 @@ const generateProtobuf = (
   }, protoTypes)
 
   return {
-    code: `
-syntax = "proto3";
+    code: `syntax = "proto3";
 
-package ${namespace.split('.').join('_')}_${name};
+package nsa.${camelToSnakeCase(namespace)}${version > 1 ? `.v${version}` : ''}.${camelToSnakeCase(name)};
 
 // ${title}
 
-${set(
-  R.map((t) => (exists(R.path(['type', 'import'], t)) ? `import "${R.path(['type', 'import'], t)}";${EOL}` : ''), rootStruct)
-).join('')}
-${generatedEnums.length > 0 ? 'import "enums/enums.proto";' : ''}
+${[
+  ...new Set(
+    R.concat(
+      R.map((t) => (exists(R.path(['type', 'import'], t)) ? `import "${R.path(['type', 'import'], t)}";${EOL}` : ''), rootStruct),
+      R.map((i) => (exists(i) ? `import "${i}";${EOL}` : ''), R.map(R.path(['import']), generatedScalars))
+    )
+  ),
+].join('')}
+${generatedEnums.length > 0 ? 'import "nsa/enums/enums.proto";' : ''}
 
-option go_package = "${env('GIT_ROOT', 'git.nav.com/engineering')}/nsa-go-proto/${exists(entity) ? `${entity}/` : ''}${camelToSnakeCase(name)}";
+option go_package = "git.nav.com/backend/go-proto/nsa/${exists(entity) ? `${entity}/` : ''}${camelToSnakeCase(name)}";
 
 ${protoTypesGen.join(EOL + EOL).slice(0, -1)}
 
@@ -135,7 +169,7 @@ message ${capitalize(name)} {
       const directives = __directives(prop)
       const isArrayType = isArray.includes(rootPropNames[idx])
       const isEnum = R.reduce((isAnEnum, e) => isAnEnum || R.equals(e.type, propType), false, generatedEnums)
-      return `${tab(idx)}${isArrayType ? 'repeated ' : ''}${isEnum ? 'nsa.' : ''}${propType} ${camelToSnakeCase(
+      return `${tab(idx)}${isArrayType ? 'repeated ' : ''}${isEnum ? 'enums.' : ''}${propType} ${camelToSnakeCase(
         extractName(prop)
       )} = ${order(directives[extractName(prop)])};`
     }, rootStruct).join(EOL)}
@@ -153,10 +187,10 @@ const postProcessStep = (files, messageDefinitionDir) => {
   const enumsSet = setOfFilesFrom('type', enumsFile)
   const code = `
   syntax = "proto3";
-  
-  package enums;
 
-  option go_package = "${env('GIT_ROOT', 'git.nav.com/engineering')}/nsa-go-proto/enums";
+  package nsa.enums;
+
+  option go_package = "git.nav.com/backend/go-proto/nsa/enums";
 
   ${R.map(R.path(['addOn']), enumsSet).join(EOL + EOL)}
 

@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk')
-const { exec } = require('promisify-child-process')
+const { spawn } = require('promisify-child-process')
 
 async function main() {
-  const gitCmd = 'git push && git push --tags'
-  console.log('\n', 'Pushing commits and tags', chalk.yellow(gitCmd))
+  const gitCmd = 'git push'
+  const gitTagCmd = 'git push --tags'
+  console.log('\n', 'Pushing commits and tags', chalk.yellow(gitCmd), chalk.yellow(gitTagCmd))
 
   try {
-    const { stdout, stderr } = await exec(gitCmd)
+    let stdout, stderr
+    ;({ stdout, stderr } = await spawn(gitCmd.split(' ')[0], gitCmd.split(' ').slice(1), { encoding: 'utf8' }))
+    console.log(stdout, stderr)
+    ;({ stdout, stderr } = await spawn(gitTagCmd.split(' ')[0], gitTagCmd.split(' ').slice(1), { encoding: 'utf8' }))
     console.log(stdout, stderr)
   } catch (e) {
     console.error(chalk.red(e), e.stdout, e.stderr)

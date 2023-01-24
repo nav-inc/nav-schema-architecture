@@ -176,7 +176,7 @@ const generateRuby = (
     )
 
     const rubyCode = `
-module NavSchemaArchitecture::${R.map((n) => firstUpperCase(n), namespace.split('.')).join('::')}
+module NavSchemaArchitecture::${R.map((n) => firstUpperCase(n), namespace.split('.')).join('::')}${version > 1 ? `::V${version}`: ''}
   module ${rootName}
 
 # ${title}
@@ -264,7 +264,7 @@ require "date"
 require_relative "utils"
 require_relative "enums"
 ${R.map(
-  (f) => f.path ? `require_relative "${processFileName(f.outputFileName, messageDefinitionDir, camelToSnakeCase(f.path))}"` : '',
+  (f) => `require_relative "${processFileName(f.outputFileName, messageDefinitionDir, camelToSnakeCase(f.path))}"`,
   rubyFiles
 ).join(EOL)}
 
@@ -274,7 +274,7 @@ ${R.map(
 }
 
 const schemaType = 'ruby'
-const version = '1.0.0'
+const version = '1.1.0'
 
 module.exports = {
   generate,

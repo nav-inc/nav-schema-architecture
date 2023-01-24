@@ -1,16 +1,18 @@
-# Adapted from Gildas Garcia 
+# Adapted from Gildas Garcia
 # https://github.com/marmelab/GraphQL-example/blob/master/schema.graphql
 
 schema {
   query: Query
 }
 
-scalar Any
-scalar Date
+scalar ISODate
 scalar DateTime
-scalar Phone
-scalar Email
+scalar Any
 scalar UUID
+scalar Email
+scalar ZIPCode
+scalar CurrencyCent
+scalar Phone
 
 enum Categories {
   AUTOMOTIVE
@@ -25,8 +27,8 @@ enum Categories {
   GOVERNMENT
   MEDICAL
   LAW
-  MEDIA 
-  SCIENCE 
+  MEDIA
+  SCIENCE
   TECHNOLOGY
   ENTREPRENEUR
 }

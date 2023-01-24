@@ -1,11 +1,15 @@
-const Date = {
-  type: 'navtypes.ISODate',
+const ISODate = {
+  type: 'nav.Date',
   import: 'nav/date.proto'
 }
 
 const DateTime = {
   type: 'google.protobuf.Timestamp',
   import: 'google/protobuf/timestamp.proto',
+}
+
+const CurrencyCent = {
+  type: 'int64',
 }
 
 const UUID = {
@@ -47,8 +51,9 @@ const stringFormatter = (p, context) => {
 }
 
 module.exports = {
-  Date,
+  ISODate,
   DateTime,
+  CurrencyCent,
   UUID,
   Phone,
   Email,

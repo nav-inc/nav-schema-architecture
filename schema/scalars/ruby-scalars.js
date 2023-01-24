@@ -1,9 +1,13 @@
-const Date = {
+const ISODate = {
   type: 'Date'
 }
 
 const DateTime = {
   type: 'DateTime'
+}
+
+const CurrencyCent = {
+  type: 'Numeric',
 }
 
 const Any = {
@@ -40,8 +44,8 @@ const stringFormatter = (p, context) => {
 const converter = {
   String: 'String',
   ID: 'String',
-  Int: 'Numeric',
-  Float: 'Numeric',
+  Int: 'Integer',
+  Float: 'Float',
   ListType: 'Array',
   Boolean: 'Boolean', // FIXME: This actually has no type match in Ruby, oddly.
   ObjectTypeDefinition: 'Hash',
@@ -49,8 +53,9 @@ const converter = {
 }
 
 module.exports = {
-  Date,
+  ISODate,
   DateTime,
+  CurrencyCent,
   UUID,
   Phone,
   ZIPCode,
